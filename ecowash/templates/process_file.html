@@ -1,0 +1,10 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="csv_file">
+    <select name="key">
+        <option value="fabrication">Fabrication</option>
+        <option value="sub_assembly">Sub Assembly</option>
+        <option value="assembly">Assembly</option>
+    </select>
+    <button type="submit">Process File</button>
+</form>

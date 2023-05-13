@@ -13,24 +13,29 @@ This repository contains the backend code for ingesting data using Kafka, loadin
 
 ## Flow of Process
 
-1. User Upload:
+1. Data expansion:
+   - Data is uploaded on jupyter notebook and converted into data frame.
+   - Each category (fabrication, sub-assembly and assembly) is handeled separately.
+   - After carefully reviewing every data it is expanded based on its previous process's out date.
+
+2. User Upload:
    - Users upload data to the system, initiating the data processing pipeline.
 
-2. Ingestion using Kafka:
+3. Ingestion using Kafka:
    - Kafka acts as a distributed messaging system for data ingestion.
    - User-uploaded data is sent to Kafka topics.
 
-3. Load Data Lake:
+4. Load Data Lake:
    - The data from Kafka topics is loaded into the data lake, which is implemented using HDFS.
    - Raw data is stored in its original format in the data lake for further processing.
 
-4. Validation, Transformation, and Stamping using Spark:
+5. Validation, Transformation, and Stamping using Spark:
    - Spark processes the data stored in the data lake.
    - The data goes through validation to ensure its quality and integrity.
    - Transformation tasks are performed to shape the data according to business requirements.
    - Stamping involves adding metadata or markers to the processed data for traceability.
 
-5. Postgres SQL - Normalized Database:
+6. Postgres SQL - Normalized Database:
    - The processed data is stored in a normalized database, specifically PostgreSQL.
    - The normalized database provides efficient storage and querying capabilities for structured data.
 

@@ -16,6 +16,7 @@ This repository contains the backend code for ingesting data using Kafka, loadin
 1. Data expansion:
    - Data is uploaded on jupyter notebook and converted into data frame.
    - Each category (fabrication, sub-assembly and assembly) is handeled separately.
+   - Using python's datetime and random module, we found out data insights.
    - After carefully reviewing every data it is expanded based on its previous process's out date.
 
 2. User Upload:

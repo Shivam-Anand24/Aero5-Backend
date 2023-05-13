@@ -16,13 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from data_sphere.views import home_view, process_file, login
+from data_sphere.views import home_view, process_file, login, get_data_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
     path('upload/',process_file , name='upload'),
     path('auth/',login , name='login'),
-
+    path('data/<str:table_name>/', get_data_view, name='get_data'),
 
 ]

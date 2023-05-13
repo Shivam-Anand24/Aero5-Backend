@@ -2,13 +2,17 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import JsonResponse
-from .spark.data_processing import process_csv
 from django.views.decorators.csrf import csrf_exempt
-import os
 from django.conf import settings
 from django.http import HttpResponse
-from .models import User
 
+from .spark.data_processing import process_csv
+from .models import User
+from .data_service import DataService
+from .db_to_json_converter import DBToJsonConverter
+
+import json
+import os
 
 
 @csrf_exempt
@@ -51,7 +55,6 @@ def home_view(request):
     return JsonResponse({'message': 'App is working!'})
 
 
-import json
 
 @csrf_exempt
 def login(request):
@@ -73,3 +76,23 @@ def login(request):
             return JsonResponse({'message': 'Login failed'}, status=401)
     else:
         return JsonResponse({'message': 'Invalid request'}, status=400)
+    
+
+
+
+
+@csrf_exempt
+def get_data_view(request, table_name):
+    data_service = DataService()
+    df = data_service.read_data(table_name)
+    
+    # Assuming the DataFrame has columns and rows data
+    headers = df.columns
+    data = df.collect()
+
+    converted_data = {
+        'headers': headers,
+        'data': [row.asDict() for row in data]
+    }
+
+    return JsonResponse(converted_data)
